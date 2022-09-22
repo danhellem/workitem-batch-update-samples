@@ -1,0 +1,30 @@
+@url = https://dev.azure.com/{{organization}}/{{project}}/_apis/wit
+@id = 7023
+
+### Get a work item
+GET {{url}}/workitems/{{id}}?api-version=7.1-preview.3 HTTP/1.1
+Authorization: Basic {{token}}
+
+### Update a work item
+@rev = 11
+PATCH {{url}}/workitems/{{id}}?api-version=7.1-preview.3 HTTP/1.1
+content-type: Application/json-patch+json
+Authorization: Basic {{token}}
+
+[
+  {
+    "op": "test",
+    "path": "/rev",
+    "value": {{rev}}
+  },
+  {
+    "op": "replace",
+    "path": "/fields/Microsoft.VSTS.Common.Priority",
+    "value": 1
+  },
+  {
+    "op": "replace",
+    "path": "/fields/Microsoft.VSTS.Common.ValueArea",
+    "value": "Architectural"
+  }
+]

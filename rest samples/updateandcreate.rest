@@ -1,0 +1,59 @@
+@url = https://{{organization}}.visualstudio.com/_apis/wit
+
+### Update one work item, create another
+PATCH {{url}}/$batch?api-version=4.1 HTTP/1.1
+content-type: application/json
+Authorization: Basic {{token}}
+
+[{
+	"method": "PATCH",
+	"uri": "/_apis/wit/workitems/7023?api-version=4.1",
+	"headers": {
+		"Content-Type": "application/json-patch+json"     
+	},
+	"body": [{
+		"op": "test",
+		"path": "/rev",
+		"value": 13
+		},
+		{
+            "op": "replace",
+            "path": "/fields/Microsoft.VSTS.Common.Priority",
+            "value": 1
+        },
+        {
+            "op": "replace",
+            "path": "/fields/Microsoft.VSTS.Common.ValueArea",
+            "value": "Architectural"
+        }
+	]
+},
+{
+	"method": "PATCH",
+	"uri": "/{{project}}/_apis/wit/workitems/$Feature?api-version=7.1-preview.3",
+	"headers": {
+		"Content-Type": "application/json-patch+json"     
+	},
+	"body": [
+		{
+            "op": "add",
+            "path": "/id",
+            "value": "-1"
+        },
+		{
+            "op": "add",
+            "path": "/fields/System.Title",
+            "value": "Hello world"
+        },
+		{
+            "op": "add",
+            "path": "/fields/Microsoft.VSTS.Common.Priority",
+            "value": 1
+        },
+        {
+            "op": "add",
+            "path": "/fields/Microsoft.VSTS.Common.ValueArea",
+            "value": "Architectural"
+        }
+	]
+}]
